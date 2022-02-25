@@ -4,17 +4,28 @@
 <html>
 <head>
 <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="fileSaver.js"></script>
 
 </head>
 <body>
 
- 
+ <!-- https://hawksey.info/blog/2014/07/google-sheets-as-a-database-insert-with-apps-script-using-postget-methods-with-ajax-example/ -->
   
   <div id="location"></div>
   <div id="time"></div>
   
+  </html>
+  <!-- <button type="button" onclick="saveStaticDataToFile();">Click to Save</button> -->
+  
   
   <script>
+      function saveStaticDataToFile(newData) {
+          var blob = new Blob([newData],
+              { type: "text/plain;charset=utf-8" });
+          saveAs(blob, "static.txt");
+      }
+	  
+	  
 	  var options = {
 	    enableHighAccuracy: true,
 	    timeout: 10000,
@@ -29,8 +40,10 @@
 		var lng = pos.coords.longitude
 		var acc = pos.coords.accuracy
 		
-		d3.select("#location").html(lat+","+lng)
+		d3.select("#location").html(lat+","+lng+","+timeStamp)
 		d3.select("#time").html(timeStamp)
+		
+		saveStaticDataToFile(lat+","+lng+","+timeStamp)
 		
 		console.log(pos.coords.latitude)
 	    console.log('Your current position is:');
