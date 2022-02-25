@@ -1,0 +1,52 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+
+</head>
+<body>
+
+ 
+  
+  <div id="location"></div>
+  <div id="time"></div>
+  
+  
+  <script>
+	  var options = {
+	    enableHighAccuracy: true,
+	    timeout: 10000,
+	    maximumAge: 0
+	  };
+
+	  var timeStamp = Date.now();
+
+	  function success(pos) {
+	    var crd = pos.coords;
+		var lat = pos.coords.latitude
+		var lng = pos.coords.longitude
+		var acc = pos.coords.accuracy
+		
+		d3.select("#location").html(lat+","+lng)
+		d3.select("#time").html(timeStamp)
+		
+		console.log(pos.coords.latitude)
+	    console.log('Your current position is:');
+	    console.log(`Latitude : ${crd.latitude}`);
+	    console.log(`Longitude: ${crd.longitude}`);
+	    console.log(`More or less ${crd.accuracy} meters.`);
+	  }
+
+	  function error(err) {
+	    console.warn(`ERROR(${err.code}): ${err.message}`);
+	  }
+
+	  navigator.geolocation.getCurrentPosition(success, error, options);
+	  
+  </script>
+  
+  
+</body>
+</html>
